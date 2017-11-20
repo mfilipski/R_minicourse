@@ -1,0 +1,79 @@
+---
+title: "Doing Stats with R"
+author: "mf"
+date: "November 4, 2017"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(UsingR)
+```
+
+## Simple OLS Regression: lm  function 
+
+```{r regs, echo=TRUE}
+#You'll need to load the UsingR package for this data
+data(diamond)
+y <- diamond$price; x <- diamond$carat;
+fit <- lm(y ~ x)
+fit
+```
+
+
+## Plot that graph: 
+```{r, echo = TRUE, eval=FALSE}
+plot(diamond$carat, diamond$price,  
+     xlab = "Mass (carats)", 
+     ylab = "Price (SIN $)", 
+     bg = "lightblue", 
+     col = "black", cex = 2, pch = 21,frame = FALSE)
+abline(fit, lwd = 2)
+```
+
+## plot 
+```{r, echo = FALSE, fig.height=5, fig.width=5}
+plot(diamond$carat, diamond$price,  
+     xlab = "Mass (carats)", 
+     ylab = "Price (SIN $)", 
+     bg = "lightblue", 
+     col = "black", cex = 2, pch = 21,frame = FALSE)
+abline(fit, lwd = 2)
+```
+
+## For more stats: 
+
+```{r, echo = TRUE, eval=FALSE}
+summary(fit)
+attributes(summary(fit))
+```
+
+## To get more specific outputs: 
+
+```{r, echo = TRUE}
+
+summary(fit)$sigma
+summary(fit)$r.squared
+```
+
+## For something more complex: glm function 
+That's for logits, probits, poisson regs, etc.
+```{r, echo = TRUE, eval=FALSE}
+# Automatic vs. manual on weight, cylinders, miles per gallon
+head(mtcars)
+binreg <- glm(am ~ wt + cyl + mpg,family="binomial", data=mtcars)
+summary(binreg)$coefficients
+``` 
+
+
+## Also works with poisson
+
+
+```{r, echo = TRUE, eval=FALSE}
+# number of carburators on weight, cylinders, miles per gallon
+poisson <- glm(carb ~ wt + cyl + mpg,family="poisson"
+               , data=mtcars)
+summary(poisson)$coefficients
+```
+
+
